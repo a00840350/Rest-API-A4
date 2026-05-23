@@ -1,25 +1,55 @@
-import React from "react"
-
+import { Button, TextField, Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import React, { useState } from "react";
 
 const Add = ({ addUser }) => {
-    const onSubmit = (e) => {
-        e.preventDefault()
-        const name = e.target.name.value
-        const email = e.target.Username.value
-        const password = e.target.password.value
-        addUser({ name, email, password })
-}
-}
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
 
-return (
-        <form onSubmit={onSubmit}>
-            <input type="text" name="name" placeholder="Name" />
-            <input type="text" name="Username" placeholder="Username" />
-            <input type="password" name="password" placeholder="Password" />
-            <button type="submit">
-                Add User
-            </button>
-        </form>
-    )
+  const onsubmit = (e) => {
+    e.preventDefault();
+    if (!name || !username || !password) {
+      alert("datos faltantes");
+      return;
+    }
+    addUser({ name, username, password, role });
+    setName("");
+    setUsername("");
+    setPassword("");
+    setRole("user");
+  };
 
-export default Add
+  return (
+    <form onSubmit={onsubmit} style={{ display: 'flex', gap: '10px', alignItems: 'center', marginBottom: '20px' }}>
+      <TextField label="Name" size="small" value={name} onChange={(e) => setName(e.target.value)} />
+      <TextField
+        label="Username"
+        size="small"
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+      />
+      <TextField
+        label="Password"
+        size="small"
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <FormControl size="small" style={{ minWidth: 120 }}>
+        <InputLabel>Role</InputLabel>
+        <Select
+          value={role}
+          label="Role"
+          onChange={(e) => setRole(e.target.value)}
+        >
+          <MenuItem value="user">User</MenuItem>
+          <MenuItem value="admin">Admin</MenuItem>
+        </Select>
+      </FormControl>
+      <Button variant="contained" type="submit">Add</Button>
+    </form>
+  );
+};
+
+export default Add;
