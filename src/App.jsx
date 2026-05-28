@@ -67,6 +67,7 @@ function AppLayout() {
           path="/admin"
           element={<Admin addUser={addUser} users={users} delUser={delUser} />}
         />
+        <Route path="/users/:username" element={<Details users={users} />} />
       </Routes>
     </>
   );
